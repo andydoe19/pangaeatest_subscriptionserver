@@ -1,10 +1,12 @@
 package pangaeatestsubscriptionserver.contollers;
 
+import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.HttpClient;
+import pangaeatestsubscriptionserver.DTOs.PublishToSubscriberPayloadDTO;
 import pangaeatestsubscriptionserver.domain.Subscriber;
 import pangaeatestsubscriptionserver.repositories.SubscriberRepository;
 
@@ -58,7 +60,14 @@ public class PublisherController {
             HttpClient client = HttpClient.create(new URL(baseUrl));
             HttpResponse<?> response = client.toBlocking()
                     .exchange(
-                            HttpRequest.POST(url.getFile(), body)
+                            HttpRequest.POST(url.getFile(),
+                                    PublishToSubscriberPayloadDTO.builder()
+                                            .topic(topic)
+                                            .data(body)
+                                            .build()
+                            ),
+                            Argument.of(PublishToSubscriberPayloadDTO.class),
+                            Argument.of(PublishToSubscriberPayloadDTO.class)
                     );
         }
 
