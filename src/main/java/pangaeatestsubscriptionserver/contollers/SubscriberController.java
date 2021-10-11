@@ -1,5 +1,6 @@
 package pangaeatestsubscriptionserver.contollers;
 
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Get;
 import pangaeatestsubscriptionserver.DTOs.CreateSubscriptionDTO;
 import pangaeatestsubscriptionserver.DTOs.SubscribeResponse;
@@ -25,19 +26,31 @@ public class SubscriberController {
      ************************/
 
     @Post("/{topic}")
-    public SubscribeResponse create(@Body @Valid CreateSubscriptionDTO subscription,
+    public HttpResponse<?> create(@Body @Valid CreateSubscriptionDTO subscription,
                                     String topic){
-        //save subscriber to db
-        subscriberRepository.save(Subscriber.builder()
-                .topic(topic)
-                .subscriberUrl(subscription.getUrl())
-                .build());
 
-        //output subscription success response
-        return SubscribeResponse.builder()
-                .url(subscription.getUrl())
-                .topic(topic)
-                .build();
+        //check for duplicate
+        if (!subscriberRepository
+                .findByTopicAndSubscriberUrl(topic, subscription.getUrl()).isPresent()) {
+
+            //save subscriber to db
+            subscriberRepository.save(Subscriber.builder()
+                    .topic(topic)
+                    .subscriberUrl(subscription.getUrl())
+                    .build());
+
+            //output subscription success response
+            return HttpResponse.created(
+                    SubscribeResponse.builder()
+                        .url(subscription.getUrl())
+                        .topic(topic)
+                        .build()
+            );
+        }
+        else {
+            return HttpResponse.serverError("Already subscribed");
+        }
+
     }
 
     @Get("/list")
