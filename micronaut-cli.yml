@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: pangaeatestsubscriptionserver
+---
+testFramework: junit
+sourceLanguage: java

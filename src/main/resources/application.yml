@@ -1,0 +1,41 @@
+# ---
+# application configuration; endpoints and jwt config
+# ---
+micronaut:
+    application:
+      name: pangaeatestsubscriptionserver
+    server:
+      port: 8000
+
+# ---
+# for customized json data encoding and decoding
+# ---
+jackson:
+  bean-introspection-module: true
+
+# ---
+# building database connection and table generation method
+# ---
+datasources:
+  default:
+    #    url: jdbc:h2:mem:devDb
+    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+    schema-generate: CREATE_DROP
+    dialect: H2
+
+# ---
+# java entity mappings and sql ddl generation configs
+# ---
+jpa:
+  default:
+    entity-scan:
+      - 'pangaeatestsubscriptionserver.domains'
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        enable_lazy_load_no_trans: true
+        show_sql: false
