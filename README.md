@@ -8,7 +8,7 @@ Afterwards, the server can publish a message to any topic on the server, and tha
 all subscribers subscribed to that topic.<br /><br />
 
 However this server works hand in hand with a Test subscribers server, which receives notifications anytime 
-a publish request is fired on the Test Subscription server. The Test subscribers server can be found here ...
+a publish request is fired on the Test Subscription server. The Test subscribers server can be found here https://github.com/andydoe19/pangaeatest_subscribers
 
 ## Development Language
 **Java programming language**
@@ -23,7 +23,6 @@ for developing responsive and fast microservices. More about Micronaut are below
 3. IntelliJ IDEA
 4. Git
 5. Postman (To test API Endpoints) <br /><br />
-
 
 ## Project Setup
 After cloning the project with Git, open IntelliJ and Click on File > Open.
@@ -58,10 +57,10 @@ you can test the project with the url - http://localhost:8000 <br /><br />
 ## Testing the API Endpoints
 Manual testing can be done with **Postman** desktop application. <br /><br />
 Here are the following Endpoints to test: <br />
-> Subscription
+> 1. Subscription
 ---
 This API registers subscribers onto the server. The following test subscriber urls, found on 
-the test subscribers server can be used for this API: http://localhost:9000/test1, 
+the test subscribers server can be used for testing this API: http://localhost:9000/test1, 
 http://localhost:9000/test2, http://localhost:9000/test3 . <br/>
 Hence here's a sample request : <br/>
 ```
@@ -71,7 +70,7 @@ Content-Type: application/json
 { "url": "http://localhost:9000/test1"}
 ```
 
-> Publish
+> 2. Publish
 ---
 This API sends the supplied message to all subscribers registered to a particular topic on the server. 
 <br/>
@@ -83,7 +82,7 @@ Content-Type: application/json
 { "message": "test notification to all subscribers"}
 ```
 
-> List all Subscribers
+> 3. List all Subscribers
 ---
 This API lists all subscriber details on the server. 
 <br/>
